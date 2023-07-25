@@ -202,11 +202,12 @@ class _HomePage extends State<HomePage> {
               content: TextField(
                 controller: _controller,
                 decoration: InputDecoration(
+                    hintText: 'Add your task',
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(10),
                         borderSide: const BorderSide(
                             color: Colors.black,
-                            width: 2,
+                            width: 5,
                             style: BorderStyle.solid))),
               ),
               actions: [
