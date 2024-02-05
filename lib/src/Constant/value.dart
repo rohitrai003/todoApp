@@ -9,6 +9,4 @@ List week = [
   'Saturday'
 ];
 
-List<String> task = [];
-List<bool> taskCompleted = List.generate(20, (index) => false);
 List<String> mood = ['😀', '😒', '😍', '😴', '😡', '😱'];
