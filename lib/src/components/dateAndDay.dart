@@ -8,11 +8,11 @@ dateAndDay() {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          '${date.day}/${date.month}/${date.year}',
+          currentDate,
           style: const TextStyle(fontSize: 15),
         ),
         Text(
-          week[date.weekday].toString().toUpperCase(),
+          dateFormat,
           style: const TextStyle(fontSize: 15),
         ),
       ],
