@@ -1,12 +1,4 @@
-DateTime date = DateTime.now();
-List week = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday'
-];
+import 'package:intl/intl.dart';
 
-List<String> mood = ['😀', '😒', '😍', '😴', '😡', '😱'];
+String currentDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
+String dateFormat = DateFormat('EEEE').format(DateTime.now());

@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list_app/src/Constant/Color.dart';
+import 'package:todo_list_app/src/data/taskList.dart';
 import 'package:todo_list_app/src/provider/taskOperation.dart';
 
+// ignore: must_be_immutable
 class ItemBox extends StatefulWidget {
-  ItemBox({super.key, required this.index});
+  ItemBox(
+      {super.key,
+      required this.index,
+      required this.saveData,
+      required this.length});
   int index;
+  int length;
+  Future<dynamic> saveData;
   // List task;
 
   @override
@@ -13,38 +21,40 @@ class ItemBox extends StatefulWidget {
 }
 
 class _ItemBoxState extends State<ItemBox> {
+  double height = 70;
   @override
   Widget build(BuildContext context) {
     var taskOperation = Provider.of<TaskOperation>(context);
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-      height: 60,
-      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 100),
+      curve: Curves.ease,
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       decoration: BoxDecoration(
-        color: kSecondaryColor,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: const [
-          BoxShadow(offset: Offset(0, 2), color: Colors.grey, blurRadius: 5),
-        ],
-      ),
+          shape: BoxShape.rectangle,
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15)),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Row(
           children: [
             Checkbox(
                 checkColor: kSecondaryColor,
                 activeColor: kPrimaryColor,
-                value: taskOperation.taskCompleted[widget.index],
+                value: task[widget.index]["isCompleted"],
                 onChanged: (value) {
                   taskOperation.taskComplete(widget.index);
-                  print(taskOperation.taskCompleted.elementAt(widget.index));
                 }),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.6,
-              child: taskOperation.taskCompleted[widget.index] == false
-                  ? Text(taskOperation.task[widget.index])
+              child: task[widget.index]["isCompleted"] == false
+                  ? Text(
+                      task[widget.index]["task"],
+                      style: const TextStyle(overflow: TextOverflow.ellipsis),
+                    )
                   : Text(
-                      taskOperation.task[widget.index],
+                      task[widget.index]["task"],
                       style: const TextStyle(
+                          overflow: TextOverflow.ellipsis,
                           decoration: TextDecoration.lineThrough),
                     ),
             ),
@@ -52,11 +62,12 @@ class _ItemBoxState extends State<ItemBox> {
         ),
         GestureDetector(
           onTap: () {
-            taskOperation.deleteTask(widget.index);
+            taskOperation.deleteTask(widget.index, () => widget.saveData);
           },
           child: Container(
             height: 35,
             width: 35,
+            margin: const EdgeInsets.only(right: 5),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5), color: kPrimaryColor),
             child: Center(
